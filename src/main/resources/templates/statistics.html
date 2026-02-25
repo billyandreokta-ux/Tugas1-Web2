@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title}">Statistik Produk</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+<div th:replace="~{fragments/layout :: navbar}"></div>
+
+<div class="max-w-3xl mx-auto mt-10 px-4">
+
+    <h1 class="text-3xl font-bold mb-8" th:text="${title}">Statistik Produk</h1>
+
+    <!-- Ringkasan angka -->
+    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-8">
+        <div class="bg-white rounded-lg shadow p-5 text-center">
+            <p class="text-4xl font-bold text-blue-600" th:text="${totalProducts}">0</p>
+            <p class="text-gray-500 text-sm mt-1">Total Produk</p>
+        </div>
+        <div class="bg-white rounded-lg shadow p-5 text-center">
+            <p class="text-4xl font-bold text-green-600"
+               th:text="'Rp ' + ${#numbers.formatDecimal(averagePrice, 0, 'COMMA', 0, 'POINT')}">Rp 0</p>
+            <p class="text-gray-500 text-sm mt-1">Rata-rata Harga</p>
+        </div>
+        <div class="bg-white rounded-lg shadow p-5 text-center">
+            <p class="text-4xl font-bold text-red-500" th:text="${lowStockCount}">0</p>
+            <p class="text-gray-500 text-sm mt-1">Stok Menipis (&lt; 20)</p>
+        </div>
+    </div>
+
+    <!-- Produk termahal & termurah -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+        <div class="bg-white rounded-lg shadow p-5">
+            <p class="text-gray-500 text-sm mb-1">Produk Termahal</p>
+            <p class="font-semibold text-lg" th:text="${mostExpensive.name}">Nama</p>
+            <p class="text-blue-600 font-bold"
+               th:text="'Rp ' + ${#numbers.formatDecimal(mostExpensive.price, 0, 'COMMA', 0, 'POINT')}">Rp 0</p>
+        </div>
+        <div class="bg-white rounded-lg shadow p-5">
+            <p class="text-gray-500 text-sm mb-1">Produk Termurah</p>
+            <p class="font-semibold text-lg" th:text="${cheapest.name}">Nama</p>
+            <p class="text-green-600 font-bold"
+               th:text="'Rp ' + ${#numbers.formatDecimal(cheapest.price, 0, 'COMMA', 0, 'POINT')}">Rp 0</p>
+        </div>
+    </div>
+
+    <!-- Produk per kategori -->
+    <div class="bg-white rounded-lg shadow p-5 mb-8">
+        <h2 class="text-lg font-semibold mb-4">Produk per Kategori</h2>
+        <table class="w-full text-sm">
+            <thead>
+            <tr class="border-b">
+                <th class="text-left py-2">Kategori</th>
+                <th class="text-right py-2">Jumlah Produk</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="entry : ${countPerCategory}" class="border-b last:border-0">
+                <td class="py-2">
+                    <a th:href="@{/products/category/{cat}(cat=${entry.key})}"
+                       th:text="${entry.key}"
+                       class="text-blue-600 hover:underline">Kategori</a>
+                </td>
+                <td class="py-2 text-right font-semibold" th:text="${entry.value}">0</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div>
+        <a th:href="@{/}" class="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700">Kembali ke Home</a>
+    </div>
+
+</div>
+
+<div th:replace="~{fragments/layout :: footer}"></div>
+
+</body>
+</html>

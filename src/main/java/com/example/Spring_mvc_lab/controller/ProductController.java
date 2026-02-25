@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -79,4 +81,19 @@ public class ProductController {
 
         return "product/list";  // reuse template yang sama!
     }
+
+    @GetMapping("/categories")
+    public String categorySummary(Model model) {
+        List<String> categories = productService.getAllCategories();
+
+        Map<String, Long> categoryCount = new LinkedHashMap<>();
+        for (String cat : categories) {
+            categoryCount.put(cat, productService.countByCategory(cat));
+        }
+
+        model.addAttribute("categoryCount", categoryCount);
+        model.addAttribute("title", "Ringkasan Kategori");
+        return "product/categories";
+    }
+
 }

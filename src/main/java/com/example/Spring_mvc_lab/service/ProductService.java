@@ -3,9 +3,8 @@ package com.example.Spring_mvc_lab.service;
 import com.example.Spring_mvc_lab.model.Product;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
@@ -43,5 +42,44 @@ public class ProductService {
         return products.stream()
                 .filter(p -> p.getName().toLowerCase().contains(lowerKeyword))
                 .toList();
+    }
+
+    public List<String> getAllCategories() {
+        return products.stream()
+                .map(Product::getCategory)
+                .distinct()
+                .sorted()
+                .toList();
+    }
+
+    public long countByCategory(String category) {
+        return products.stream()
+                .filter(p -> p.getCategory().equalsIgnoreCase(category))
+                .count();
+    }
+
+    public Product findMostExpensive() {
+        return products.stream()
+                .max((a, b) -> Double.compare(a.getPrice(), b.getPrice()))
+                .orElse(null);
+    }
+
+    public Product findCheapest() {
+        return products.stream()
+                .min((a, b) -> Double.compare(a.getPrice(), b.getPrice()))
+                .orElse(null);
+    }
+
+    public double getAveragePrice() {
+        return products.stream()
+                .mapToDouble(Product::getPrice)
+                .average()
+                .orElse(0);
+    }
+
+    public long countLowStock() {
+        return products.stream()
+                .filter(p -> p.getStock() < 20)
+                .count();
     }
 }
