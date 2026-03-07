@@ -2,24 +2,31 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <!-- Fragment: Navbar -->
-<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-        <a class="navbar-brand" th:href="@{/}">Spring MVC Lab</a>
-        <div class="navbar-nav">
-            <a class="nav-link" th:href="@{/}">Home</a>
-            <a class="nav-link" th:href="@{/products}">Produk</a>
-            <a class="nav-link" th:href="@{/about}">About</a>
+<nav th:fragment="navbar"
+     class="bg-gray-800 text-white px-6 py-4">
+    <div class="max-w-6xl mx-auto flex items-center justify-between">
+
+        <a th:href="@{/}" class="text-xl font-bold">
+            Spring MVC Lab
+        </a>
+
+        <div class="flex gap-4">
+            <a th:href="@{/}" class="hover:text-gray-300">Home</a>
+            <a th:href="@{/products}" class="hover:text-gray-300">Produk</a>
+            <a th:href="@{/about}" class="hover:text-gray-300">About</a>
+            <a th:href="@{/products/categories}" class="hover:text-gray-300">Kategori</a>
+            <a th:href="@{/statistics}" class="hover:text-gray-300">Statistik</a>
         </div>
+
     </div>
 </nav>
 
 <!-- Fragment: Footer -->
-<footer th:fragment="footer" class="bg-light text-center py-3 mt-5">
-    <div class="container">
-        <p class="text-muted mb-0">
-            Spring MVC Lab &copy; 2026 | WEB-202 Week 4
-        </p>
-    </div>
+<footer th:fragment="footer"
+        class="bg-gray-200 text-gray-600 text-center py-4 mt-auto">
+    <p class="text-sm">
+        Spring MVC Lab © 2026 | WEB-202 Week 4
+    </p>
 </footer>
 
 </html>

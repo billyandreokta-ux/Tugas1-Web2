@@ -1,6 +1,6 @@
 package com.example.Spring_mvc_lab.controller;
 
-import com.example.Spring_mvc_lab.model.Product;
+import com.example.Spring_mvc_lab.model.Products;
 import com.example.Spring_mvc_lab.service.ProductService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,8 +28,8 @@ public class StatisticsController {
             countPerCategory.put(cat, productService.countByCategory(cat));
         }
 
-        Product mostExpensive = productService.findMostExpensive();
-        Product cheapest = productService.findCheapest();
+        Products mostExpensive = productService.findMostExpensive();
+        Products cheapest = productService.findCheapest();
 
         model.addAttribute("title", "Statistik Produk");
         model.addAttribute("totalProducts", productService.findAll().size());

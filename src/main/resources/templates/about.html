@@ -3,40 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <title th:text="${appName} + ' - About'">About</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
-</head>
-<body class="bg-gray-100 min-h-screen">
 
-<!-- Navbar -->
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen flex flex-col">
+
+<!-- Navbar (TIDAK DIUBAH) -->
 <div th:replace="~{fragments/layout :: navbar}"></div>
 
-<div class="max-w-xl mx-auto mt-10 bg-white rounded-lg shadow p-8">
+<!-- Main Content -->
+<main class="flex-1">
+    <div class="max-w-3xl mx-auto mt-10 bg-white rounded-lg shadow p-8">
 
-    <h1 class="text-3xl font-bold mb-6" th:text="${appName}">Spring MVC Lab</h1>
+        <!-- Judul & Tabel (full width, TIDAK DIUBAH) -->
+        <h1 class="text-3xl font-bold mb-6"
+            th:text="${appName}">
+            Spring MVC Lab
+        </h1>
 
-    <table class="w-full text-sm mb-6">
-        <tr class="border-b">
-            <th class="text-left py-2 pr-4 text-gray-500 w-1/3">Versi</th>
-            <td class="py-2" th:text="${version}">1.0</td>
-        </tr>
-        <tr class="border-b">
-            <th class="text-left py-2 pr-4 text-gray-500">Author</th>
-            <td class="py-2" th:text="${author}">Mahasiswa</td>
-        </tr>
-    </table>
+        <table class="w-full text-sm mb-6">
+            <tr class="border-b">
+                <th class="text-left py-2 pr-4 text-gray-500 w-1/3">Versi</th>
+                <td class="py-2" th:text="${version}">1.0</td>
+            </tr>
+            <tr class="border-b">
+                <th class="text-left py-2 pr-4 text-gray-500">Author</th>
+                <td class="py-2" th:text="${author}">Mahasiswa</td>
+            </tr>
+        </table>
 
-    <h2 class="text-lg font-semibold mb-3">Teknologi yang Digunakan</h2>
-    <ul class="list-disc list-inside space-y-1 text-gray-700">
-        <li th:each="tech : ${technologies}" th:text="${tech}">Tech</li>
-    </ul>
+        <!-- Teknologi + Foto sejajar -->
+        <div class="flex gap-8 items-stretch">
 
-    <div class="mt-8">
-        <a th:href="@{/}" class="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700">Kembali ke Home</a>
+            <!-- Kiri: Teknologi (TIDAK DIUBAH) -->
+            <div class="flex-1 flex flex-col">
+                <h2 class="text-lg font-semibold mb-3">
+                    Teknologi yang Digunakan
+                </h2>
+                <ul class="list-disc list-inside space-y-1 text-gray-700">
+                    <li th:each="tech : ${technologies}"
+                        th:text="${tech}">
+                        Tech
+                    </li>
+                </ul>
+
+                <!-- Back Button -->
+                <div class="mt-8">
+                    <a th:href="@{/}"
+                       class="inline-block bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition">
+                        Kembali ke Home
+                    </a>
+                </div>
+            </div>
+
+            <!-- Kanan: Foto dengan frame abu-abu -->
+            <div class="flex-shrink-0 flex flex-col items-center justify-start">
+                <div class="bg-gray-200 border-2 border-gray-300 p-2 rounded"
+                     style="transition: box-shadow 0.3s ease, border-color 0.3s ease;"
+                     onmouseover="this.style.boxShadow='0 0 20px 6px rgba(220,38,38,0.6)'; this.style.borderColor='rgb(220,38,38)'"
+                     onmouseout="this.style.boxShadow='none'; this.style.borderColor='rgb(209,213,219)'">
+                    <div class="w-44 h-56 overflow-hidden">
+                        <img th:src="@{/images/Billy.jpg}"
+                             alt="Billy Suwandi"
+                             class="w-full h-full object-cover">
+                    </div>
+                </div>
+                <p class="text-sm text-gray-500 mt-2"
+                   th:text="${author}">
+                    Billy Suwandi
+                </p>
+            </div>
+
+        </div>
     </div>
+</main>
 
-</div>
-
+<!-- Footer (TIDAK DIUBAH) -->
 <div th:replace="~{fragments/layout :: footer}"></div>
 
 </body>

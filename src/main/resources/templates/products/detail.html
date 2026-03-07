@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title}">Detail Produk</title>
+
+    <!-- Tailwind CSS (sama seperti home) -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body class="bg-gray-100 min-h-screen flex flex-col">
+
+<div th:replace="~{fragments/layout :: navbar}"></div>
+
+<main class="flex-1">
+    <div class="max-w-4xl mx-auto mt-6 px-4">
+        <div class="bg-white rounded-lg shadow p-6">
+
+            <!-- Produk ditemukan -->
+            <div th:if="${product != null}">
+
+                <!-- Breadcrumb -->
+                <nav aria-label="breadcrumb">
+                    <ol class="flex space-x-2 text-sm text-gray-500 mb-4">
+                        <li><a th:href="@{/}" class="hover:underline">Home</a></li>
+                        <li class="text-gray-400">/</li>
+                        <li><a th:href="@{/products}" class="hover:underline">Produk</a></li>
+                        <li class="text-gray-400">/</li>
+                        <li class="text-gray-700 font-medium" th:text="${product.name}">Nama</li>
+                    </ol>
+                </nav>
+
+                <!-- Judul -->
+                <h1 class="text-4xl font-bold mb-2" th:text="${product.name}">Nama Produk</h1>
+
+                <hr class="my-4">
+
+                <h5 class="text-lg font-semibold mb-3">Detail Produk:</h5>
+
+                <div class="max-w-md">
+                    <table class="w-full text-sm">
+                        <tr class="border-b border-gray-100">
+                            <th class="py-2 pr-4 text-gray-600 font-semibold text-left w-28">ID</th>
+                            <td class="py-2 text-gray-800" th:text="${product.id}">1</td>
+                        </tr>
+                        <tr class="border-b border-gray-100">
+                            <th class="py-2 pr-4 text-gray-600 font-semibold text-left">Nama</th>
+                            <td class="py-2 text-gray-800" th:text="${product.name}">Nama</td>
+                        </tr>
+                        <tr class="border-b border-gray-100">
+                            <th class="py-2 pr-4 text-gray-600 font-semibold text-left">Kategori</th>
+                            <td class="py-2">
+                                <a th:href="@{/products/category/{cat}(cat=${product.category})}"
+                                   th:text="${product.category}"
+                                   class="border border-blue-600 text-blue-600 px-3 py-1 rounded hover:bg-blue-50 transition text-xs">
+                                    Kategori
+                                </a>
+                            </td>
+                        </tr>
+                        <tr class="border-b border-gray-100">
+                            <th class="py-2 pr-4 text-gray-600 font-semibold text-left">Harga</th>
+                            <td class="py-2 text-green-600 font-semibold"
+                                th:text="'Rp ' + ${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')}">
+                                Rp 0
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="py-2 pr-4 text-gray-600 font-semibold text-left">Stok</th>
+                            <td class="py-2 text-gray-800">
+                                <span th:text="${product.stock}">0</span>
+                                <span th:if="${product.stock < 20}"
+                                      class="ml-2 px-2 py-1 text-xs text-white bg-red-500 rounded">
+                                    Stok Menipis!
+                                </span>
+                                <span th:if="${product.stock >= 20}"
+                                      class="ml-2 px-2 py-1 text-xs text-white bg-green-500 rounded">
+                                    Tersedia
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+            </div>
+
+            <!-- Produk tidak ditemukan -->
+            <div th:if="${product == null}">
+                <h1 class="text-4xl font-bold mb-2">Produk Tidak Ditemukan</h1>
+                <hr class="my-4">
+                <div class="bg-red-50 border border-red-200 text-red-700 rounded px-4 py-3 text-sm">
+                    <p th:text="${error}">Error message</p>
+                </div>
+            </div>
+
+            <!-- Tombol Kembali -->
+            <div class="flex flex-wrap gap-2 mt-6">
+                <a th:href="@{/products}"
+                   class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition text-sm">
+                    Kembali ke Daftar
+                </a>
+            </div>
+
+        </div>
+    </div>
+</main>
+
+<div th:replace="~{fragments/layout :: footer}"></div>
+
+</body>
+</html>

@@ -1,16 +1,16 @@
 package com.example.Spring_mvc_lab.model;
 
-public class Product {
+public class Products {
     private Long id;
     private String name;
     private String category;
     private double price;
     private int stock;
 
-    public Product() {
+    public Products() {
     }
 
-    public Product(Long id, String name, String category, double price, int stock) {
+    public Products(Long id, String name, String category, double price, int stock) {
         this.id = id;
         this.name = name;
         this.category = category;

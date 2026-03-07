@@ -1,43 +1,42 @@
 package com.example.Spring_mvc_lab.service;
 
-import com.example.Spring_mvc_lab.model.Product;
+import com.example.Spring_mvc_lab.model.Products;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
 
-    private final List<Product> products = new ArrayList<>();
+    private final List<Products> products = new ArrayList<>();
 
     public ProductService() {
         // Data dummy — nanti akan diganti database di Week JPA
-        products.add(new Product(1L, "Laptop ASUS", "Elektronik", 12_500_000, 15));
-        products.add(new Product(2L, "Mouse Logitech", "Elektronik", 350_000, 50));
-        products.add(new Product(3L, "Buku Java Programming", "Buku", 150_000, 30));
-        products.add(new Product(4L, "Kopi Arabica 250g", "Makanan", 85_000, 100));
-        products.add(new Product(5L, "Headphone Sony", "Elektronik", 1_200_000, 20));
-        products.add(new Product(6L, "Novel Laskar Pelangi", "Buku", 75_000, 45));
+        products.add(new Products(1L, "Laptop ASUS", "Elektronik", 12_500_000, 15));
+        products.add(new Products(2L, "Mouse Logitech", "Elektronik", 350_000, 50));
+        products.add(new Products(3L, "Buku Java Programming", "Buku", 150_000, 30));
+        products.add(new Products(4L, "Kopi Arabica 250g", "Makanan", 85_000, 100));
+        products.add(new Products(5L, "Headphone Sony", "Elektronik", 1_200_000, 20));
+        products.add(new Products(6L, "Novel Laskar Pelangi", "Buku", 75_000, 45));
     }
 
-    public List<Product> findAll() {
+    public List<Products> findAll() {
         return products;
     }
 
-    public Optional<Product> findById(Long id) {
+    public Optional<Products> findById(Long id) {
         return products.stream()
                 .filter(p -> p.getId().equals(id))
                 .findFirst();
     }
 
-    public List<Product> findByCategory(String category) {
+    public List<Products> findByCategory(String category) {
         return products.stream()
                 .filter(p -> p.getCategory().equalsIgnoreCase(category))
                 .toList();
     }
 
-    public List<Product> search(String keyword) {
+    public List<Products> search(String keyword) {
         String lowerKeyword = keyword.toLowerCase();
         return products.stream()
                 .filter(p -> p.getName().toLowerCase().contains(lowerKeyword))
@@ -46,7 +45,7 @@ public class ProductService {
 
     public List<String> getAllCategories() {
         return products.stream()
-                .map(Product::getCategory)
+                .map(Products::getCategory)
                 .distinct()
                 .sorted()
                 .toList();
@@ -58,13 +57,13 @@ public class ProductService {
                 .count();
     }
 
-    public Product findMostExpensive() {
+    public Products findMostExpensive() {
         return products.stream()
                 .max((a, b) -> Double.compare(a.getPrice(), b.getPrice()))
                 .orElse(null);
     }
 
-    public Product findCheapest() {
+    public Products findCheapest() {
         return products.stream()
                 .min((a, b) -> Double.compare(a.getPrice(), b.getPrice()))
                 .orElse(null);
@@ -72,7 +71,7 @@ public class ProductService {
 
     public double getAveragePrice() {
         return products.stream()
-                .mapToDouble(Product::getPrice)
+                .mapToDouble(Products::getPrice)
                 .average()
                 .orElse(0);
     }
